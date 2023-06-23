@@ -3,6 +3,7 @@ import pygame
 import sys
 from label import Label
 from img import Img
+from button import Button
 
 
 class Play:
@@ -10,6 +11,8 @@ class Play:
         self.screen = screen
 
     def play_screen(self):
+        # buttons
+        menu = Button(0, 0, "img/buttons/menu_button.png", 1, self.screen)
         # images
         pixel_label = Label()
         # menu
@@ -19,6 +22,8 @@ class Play:
             img_menu.add_img('img/background/menu_bg.png', 0, 0)
             # add 'menu' text on menu
             pixel_label.draw_text(self.screen, "jugando", (255, 255, 255), 360, 100, 120)
+            if menu.draw_button():
+                break
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.type == pygame.K_SPACE:
