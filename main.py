@@ -3,7 +3,7 @@ import sys
 from label import Label
 from img import Img
 from button import Button
-from play import Play
+from select_character import SelectCharacter
 from options import Options
 
 # init pygame
@@ -24,9 +24,9 @@ def main_menu():
     # menu
     img_menu = Img(screen)
     # buttons
-    play_button = Button(360, 230, "img/buttons/playbutton.png", 1, screen)
-    option_button = Button(360, 370, "img/buttons/option_button.png", 1, screen)
-    play = Play(screen)
+    play_button = Button(360, 230, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png", screen, 15)
+    option_button = Button(360, 370, "img/buttons/option_button.png", "img/buttons/option_button_pressed.png", screen, 16)
+    play = SelectCharacter(screen)
     options = Options(screen)
     while True:
         # add background image

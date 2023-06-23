@@ -12,7 +12,7 @@ class Options:
 
     def option_screen(self):
         # buttons
-        menu = Button(0, 0, "img/buttons/menu_button.png", 1, self.screen)
+        menu = Button(0, 0, "img/buttons/menu_button.png", "img/buttons/menu_button_pressed.png", self.screen, 6)
         # images
         pixel_label = Label()
         # menu
