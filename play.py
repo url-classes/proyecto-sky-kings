@@ -19,7 +19,7 @@ class Play:
         doble_salto = True
         index = 0
         while True:
-            self.screen.fondear()
+            self.screen.fill((0, 255, 0))
 
             movimiento = [0, 8]
             if distancia_salto > 0:
@@ -34,12 +34,12 @@ class Play:
             jugador_hb = Colisioner.moviminento_prueba(jugador_hb, paredes, movimiento)
 
             for pared in paredes:
-                pygame.draw.rect(self.screen.view, (255, 0, 0), pared)
-            pygame.draw.rect(self.screen.view, (255, 0, 0), jugador_hb)
+                pygame.draw.rect(self.screen, (255, 0, 0), pared)
+            pygame.draw.rect(self.screen, (255, 0, 0), jugador_hb)
             if index == 10:
                 personaje.actualizar_posee_correr()
-            self.screen.view.blit(personaje.get_actual_mask(), jugador_hb)
-            self.screen.view.blit(personaje.get_actual_frame(), jugador_hb)
+            self.screen.blit(personaje.get_actual_mask(), jugador_hb)
+            self.screen.blit(personaje.get_actual_frame(), jugador_hb)
 
             for evento in pygame.event.get():
                 if evento.type == QUIT:
