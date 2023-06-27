@@ -4,6 +4,7 @@ import sys
 from label import Label
 from img import Img
 from button import Button
+from play import Play
 
 
 class SelectCharacter:
@@ -38,6 +39,8 @@ class SelectCharacter:
                 print("personaje 3")
             if play_button.draw_button():
                 print("Jugando")
+                play = Play(self.screen)
+                play.play_screen()
             if menu.draw_button():
                 break
             for event in pygame.event.get():
