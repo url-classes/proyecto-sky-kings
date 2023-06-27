@@ -19,7 +19,7 @@ class Options:
         img_menu = Img(self.screen)
         while True:
             # add background image
-            img_menu.add_img('img/background/menu_bg.png', 0, 0)
+            img_menu.add_img('img/background/menu_bg.png', 0, 0, 1, 1)
             # add 'menu' text on menu
             pixel_label.draw_text(self.screen, "Opciones", (255, 255, 255), 360, 100, 120)
             if menu.draw_button():

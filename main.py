@@ -30,7 +30,7 @@ def main_menu():
     options = Options(screen)
     while True:
         # add background image
-        img_menu.add_img('img/background/menu_bg.png', 0, 0)
+        img_menu.add_img('img/background/menu_bg.png', 0, 0, 1, 1)
         # add 'menu' text on menu
         pixel_label.draw_text(screen, "MENU", (255, 255, 255), 360, 100, 120)
         # add menu buttons
