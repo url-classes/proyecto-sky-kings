@@ -24,8 +24,9 @@ def main_menu():
     # menu
     img_menu = Img(screen)
     # buttons
-    play_button = Button(360, 230, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png", screen, 15)
-    option_button = Button(360, 370, "img/buttons/option_button.png", "img/buttons/option_button_pressed.png", screen, 16)
+    play_button = Button(360, 230, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png", screen, 15, 1, 1)
+    option_button = Button(360, 370, "img/buttons/option_button.png", "img/buttons/option_button_pressed.png",
+                           screen, 16, 1, 1)
     play = SelectCharacter(screen)
     options = Options(screen)
     while True:
