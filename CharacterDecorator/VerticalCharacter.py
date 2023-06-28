@@ -7,14 +7,14 @@ from CharacterDecorator.Character import Character
 class VerticalCharacter(FisicCharacter):
     def __init__(self, character: Character):
         super().__init__(character)
-        self.jump_distance = 8
+        self.jump_distance = 0
         self.double_jump = True
         self.momentum = True
 
     def move(self, walls: list[Rect], movement: [int, int] = None):
         self.character.move(walls, movement)
         movement[1] += 8
-        if self.jump_distance < -8 and (Colisioner.tocar_suelo(self.character.get_hitbox(), walls) or self.double_jump) and movement[1] < 8:
+        if self.jump_distance < -12 and (Colisioner.tocar_suelo(self.character.get_hitbox(), walls) or self.double_jump) and movement[1] < 8:
             self.jump_distance = 8
             if self.double_jump and not Colisioner.tocar_suelo(self.character.get_hitbox(), walls):
                 self.double_jump = False
@@ -25,7 +25,6 @@ class VerticalCharacter(FisicCharacter):
         self.jump_distance -= 1
         self.vertical_lineal_move(walls, movement)
         self.character.update_coordinate()
-        print(movement[1])
         
     def vertical_lineal_move(self, walls: list[Rect], movement: [int, int] = None):
         self.character.set_hitbox_y_coordinate(self.character.get_hitbox_y_coordinate() + movement[1])
