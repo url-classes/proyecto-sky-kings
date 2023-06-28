@@ -27,9 +27,11 @@ class Play:
         map_y_position = -1080
         bottom_map = False
         time_until_touch_bottom = 0
+
         while True:
             # Load map image
-            img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+            if not bottom_map:
+                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
             if Colisioner.tocar_suelo(jugador_hb, paredes):
                 if not bottom_map:
                     time_until_touch_bottom = pygame.time.get_ticks()
@@ -41,7 +43,10 @@ class Play:
                 tiempo: int = int((pygame.time.get_ticks() - time_until_touch_bottom)/40)
                 if scroll_info.get_scroll() < tiempo*2:
                     scroll_info.update_scroll(tiempo*2)
-                    map_y_position = -1080 + scroll_info.get_scroll()
+                    if -1080 + scroll_info.get_scroll() <= 0:
+                        map_y_position = -1080 + scroll_info.get_scroll()
+
+
                 img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
 
             movimiento = [0, 8]
@@ -99,4 +104,4 @@ class Play:
                 index = 0
             pygame.display.update()
             clock = pygame.time.Clock()
-            clock.tick(40)
+            clock.tick(60)
