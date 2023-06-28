@@ -22,18 +22,21 @@ class Play:
         index = 0
 
         img_menu = Img(self.screen)
-        aux = 1
+        map_y_position = -1080
+        bottom_map = False
         while True:
             # Load map image
-            img_menu.add_img('img/map/map.png', 0, -1080, 1, 1)
+            img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
 
-            # variables para scroll
-            scroll_info = ScrollMap()
-            Tiempo: int = int(pygame.time.get_ticks()/1000)
-            print(Tiempo)
-            if aux == Tiempo:
-                aux += 1
-
+            # bandera para activar MapScroll
+            if bottom_map:
+                # Map Scroll
+                scroll_info = ScrollMap()
+                tiempo: int = int(pygame.time.get_ticks()/40)
+                if scroll_info.get_scroll() < tiempo*2:
+                    scroll_info.update_scroll(tiempo*2)
+                    map_y_position = -1080 + scroll_info.get_scroll()
+                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
 
             movimiento = [0, 8]
             if distancia_salto > 0:

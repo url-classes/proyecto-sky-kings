@@ -4,7 +4,8 @@ class ScrollMap:
         self.max = 1080
 
     def update_scroll(self, add_y: int):
-        self.Scroll += add_y
+        if self.Scroll <= self.max:
+            self.Scroll = add_y
 
     def get_scroll(self):
         return self.Scroll
