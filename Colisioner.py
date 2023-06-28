@@ -40,3 +40,9 @@ class Colisioner:
             elif movimiento[1] < 0:
                 personaje.top = colision.bottom
         return personaje
+
+    @staticmethod
+    def move_gravity(character: Rect, walls: list[Rect], move: [int, int]):
+        move[1] += 8
+        return Colisioner.moviminento_prueba(character, walls, move)
+
