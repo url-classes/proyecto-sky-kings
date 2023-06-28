@@ -2,7 +2,10 @@ import pygame
 import sys
 from pygame import *
 from Screen import Screen
-from Character import Character
+from CharacterDecorator.SpriteCharacter import SpriteCharacter
+from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
+from CharacterDecorator.VerticalCharacter import VerticalCharacter
+from CharacterDecorator.Character import Character
 from Colisioner import Colisioner
 
 
@@ -11,8 +14,9 @@ back_ground_color = (0, 0, 0)
 ventana = Screen(500, 500, 'nose', back_ground_color)
 reloj = pygame.time.Clock()
 
-personaje = Character('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
-paredes = [pygame.Rect(200, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
+personaje: Character = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
+personaje = VerticalCharacter(HorizontalCharacter(personaje))
+paredes = [pygame.Rect(0, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
 up = down = left = rigth = False
 distancia_salto = 0
 doble_salto = True
@@ -21,22 +25,22 @@ while True:
     ventana.fondear()
 
     movimiento = [0, 0]
-    if distancia_salto > 0:
-        movimiento[1] -= 30
-        distancia_salto -= 1
+    if up:
+        movimiento[1] -= 1
     if down:
         movimiento[1] += 5
     if rigth:
         movimiento[0] += 5
     if left:
         movimiento[0] -= 5
-    personaje.move_position(movimiento, paredes)
+    personaje.move(paredes, movimiento)
 
     for pared in paredes:
         pygame.draw.rect(ventana.view, (255, 0, 0), pared)
     if index == 10:
-        personaje.actualizar_posee_correr()
-    ventana.view.blit(personaje.get_actual_frame(), (personaje.get_x(), personaje.get_y()))
+        personaje.update_pose()
+    #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
+    ventana.view.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
 
     for evento in pygame.event.get():
         if evento.type == QUIT:
@@ -45,10 +49,7 @@ while True:
 
         if evento.type == KEYDOWN:
             if evento.key == K_w:
-                if distancia_salto == 0 and (Colisioner.tocar_suelo(personaje.get_hitbox(), paredes) or doble_salto):
-                    distancia_salto = 8
-                    if doble_salto and not Colisioner.tocar_suelo(personaje.get_hitbox(), paredes):
-                        doble_salto = False
+                up = True
             if evento.key == K_s:
                 down = True
             if evento.key == K_a:
