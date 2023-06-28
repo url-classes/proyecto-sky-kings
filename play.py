@@ -4,6 +4,8 @@ from pygame import *
 from Screen import Screen
 from Character import Character
 from Colisioner import Colisioner
+from img import Img
+from scrollmap import ScrollMap
 
 
 class Play:
@@ -18,8 +20,20 @@ class Play:
         distancia_salto = 0
         doble_salto = True
         index = 0
+
+        img_menu = Img(self.screen)
+        aux = 1
         while True:
-            self.screen.fill((0, 255, 0))
+            # Load map image
+            img_menu.add_img('img/map/map.png', 0, -1080, 1, 1)
+
+            # variables para scroll
+            scroll_info = ScrollMap()
+            Tiempo: int = int(pygame.time.get_ticks()/1000)
+            print(Tiempo)
+            if aux == Tiempo:
+                aux += 1
+
 
             movimiento = [0, 8]
             if distancia_salto > 0:
