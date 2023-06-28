@@ -90,3 +90,6 @@ class SpriteCharacter(Character):
 
     def get_y_coordinate(self) -> int:
         return self.y_coordinate
+
+    def control_move(self, eventos: event):
+        raise NotImplementedError

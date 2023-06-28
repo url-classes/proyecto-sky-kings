@@ -18,7 +18,20 @@ class ControlCharacter(FisicCharacter):
 
     def move(self, walls: list[Rect], movement: [int, int] = None):
         movement = [0, 0]
-        for evento in pygame.event.get():
+        if self.press_up:
+            movement[1] -= 1
+        if self.press_down:
+            movement[1] += 5
+        if self.press_right:
+            movement[0] += 5
+        if self.press_left:
+            movement[0] -= 5
+        print(movement[0])
+        self.character.move(walls, movement)
+
+    def control_move(self, eventos: event):
+        # for evento in pygame.event.get():
+        for evento in eventos:
             if evento.type == KEYDOWN:
                 if evento.key == self.up_key:
                     self.press_up = True
@@ -38,14 +51,4 @@ class ControlCharacter(FisicCharacter):
                     self.press_left = False
                 if evento.key == self.right_key:
                     self.press_right = False
-        if self.press_up:
-            movement[1] -= 1
-        if self.press_down:
-            movement[1] += 5
-        if self.press_right:
-            movement[0] += 5
-        if self.press_left:
-            movement[0] -= 5
-        print(movement[0])
-        self.character.move(walls, movement)
 

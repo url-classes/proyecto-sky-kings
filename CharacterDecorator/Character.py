@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from pygame import Surface, Rect
+from pygame import Surface, Rect, event
 
 
 class Character(metaclass=ABCMeta):
@@ -69,5 +69,9 @@ class Character(metaclass=ABCMeta):
 
     @abstractmethod
     def get_y_coordinate(self) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def control_move(self, eventos: event):
         raise NotImplementedError
 

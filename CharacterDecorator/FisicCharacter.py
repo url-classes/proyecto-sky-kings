@@ -1,4 +1,4 @@
-from pygame import Surface, Rect
+from pygame import Surface, Rect, event
 
 from CharacterDecorator.Character import Character
 
@@ -59,3 +59,6 @@ class FisicCharacter(Character):
 
     def get_y_coordinate(self) -> int:
         return self.character.get_y_coordinate()
+
+    def control_move(self, eventos: event):
+        raise NotImplementedError
