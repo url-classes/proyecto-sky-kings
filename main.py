@@ -16,6 +16,8 @@ icon = pygame.image.load("img/background/robot.png")
 
 
 def main_menu():
+    pygame.mixer.music.load('Sounds/playing-instant-long-154860.mp3')
+    pygame.mixer.music.play()
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_icon(icon)
     clock = pygame.time.Clock()
@@ -38,6 +40,7 @@ def main_menu():
         # play
 
         if play_button.draw_button():
+            pygame.mixer.music.pause()
             play.play_screen()
         pixel_label.draw_text(screen, "Jugar", (255, 255, 255), 390, 235, 85)
         # options

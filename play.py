@@ -13,6 +13,8 @@ class Play:
         self.screen = screen
 
     def play_screen(self):
+        pygame.mixer.music.load('Sounds/epic-dramatic-action-trailer-99525.mp3')
+        pygame.mixer.music.play(3)
         personaje = Character('personaje 1.png', 3, 7, 1024, 1024, 0.1, (0, 0, 0))
         paredes = [pygame.Rect(200, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
         jugador_hb = personaje.get_actual_frame().get_rect()

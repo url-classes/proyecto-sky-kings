@@ -12,6 +12,8 @@ class SelectCharacter:
         self.screen = screen
 
     def play_screen(self):
+        pygame.mixer.music.load('Sounds/playing-instant-long-154860.mp3')
+        pygame.mixer.music.play()
         # buttons
         menu = Button(5, 0, "img/buttons/menu_button.png", "img/buttons/menu_button_pressed.png", self.screen, 6, 1, 1)
         character1_button = Button(350, 355, "img/characters/character1_frame.png",
@@ -41,6 +43,7 @@ class SelectCharacter:
                 print("personaje 3")
             if play_button.draw_button():
                 print("Jugando")
+                pygame.mixer.music.pause()
                 play = Play(self.screen)
                 play.play_screen()
             if menu.draw_button():
