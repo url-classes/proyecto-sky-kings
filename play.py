@@ -5,6 +5,7 @@ from Screen import Screen
 from Character import Character
 from Colisioner import Colisioner
 from img import Img
+from platform import Platform
 from scrollmap import ScrollMap
 
 
@@ -28,10 +29,22 @@ class Play:
         bottom_map = False
         time_until_touch_bottom = 0
 
+        # platform information
+        platforms = []
+        platform_positions = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425),
+                              (350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
+
+        for position in platform_positions:
+            platform = Platform(position[0], position[1], "img/map/platform(1div2).png")
+            platforms.append(platform)
+
         while True:
+            # map movement
             # Load map image
             if not bottom_map:
                 img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+                for platform in platforms:
+                    self.screen.blit(platform.image, platform.rect)
             if Colisioner.tocar_suelo(jugador_hb, paredes):
                 if not bottom_map:
                     time_until_touch_bottom = pygame.time.get_ticks()
@@ -43,11 +56,18 @@ class Play:
                 tiempo: int = int((pygame.time.get_ticks() - time_until_touch_bottom)/40)
                 if scroll_info.get_scroll() < tiempo*2:
                     scroll_info.update_scroll(tiempo*2)
-                    if -1080 + scroll_info.get_scroll() <= 0:
-                        map_y_position = -1080 + scroll_info.get_scroll()
-
 
                 img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+                # Plataformas
+                for platform in platforms:
+                    self.screen.blit(platform.image, platform.rect)
+                    if platform.rect.y > 540:
+                        platform.update_vertical_position(0)
+                    else:
+                        platform.update_vertical_position(platform.rect.y + 2)
+                if -1080 + scroll_info.get_scroll() <= 0:
+                    map_y_position = -1080 + scroll_info.get_scroll()
+
 
             movimiento = [0, 8]
             if distancia_salto > 0:
