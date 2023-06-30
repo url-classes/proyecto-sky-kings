@@ -35,7 +35,7 @@ class Play:
                               (350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
 
         for position in platform_positions:
-            platform = Platform(position[0], position[1], "img/map/platform(1div2).png")
+            platform = Platform(position[0], position[1], "img/map/platform(0.2).png")
             platforms.append(platform)
 
         while True:
