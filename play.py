@@ -64,7 +64,7 @@ class Play:
                     if platform.rect.y > 540:
                         platform.update_vertical_position(0)
                     else:
-                        platform.update_vertical_position(platform.rect.y + 2)
+                        platform.update_vertical_position(platform.rect.y + 3)
                 if -1080 + scroll_info.get_scroll() <= 0:
                     map_y_position = -1080 + scroll_info.get_scroll()
 
