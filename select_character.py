@@ -22,11 +22,12 @@ class SelectCharacter:
                                    "img/characters/character2_frame_selected.png", self.screen, 0, 3, 3)
         character3_button = Button(550, 355, "img/characters/character3_frame.png",
                                    "img/characters/character3_frame_selected.png", self.screen, 0, 3, 3)
-
         play_button = Button(390, 440, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png",
                              self.screen, 15, 0.75, 0.75)
         # images
         pixel_label = Label()
+        player1_label = Label()
+        player2_label = Label()
         # menu
         img_menu = Img(self.screen)
         player1_character = ''
@@ -34,13 +35,14 @@ class SelectCharacter:
         character1_bool = False
         character2_bool = False
         character3_bool = False
-        
         while True:
 
             # add background image
             img_menu.add_img('img/background/select_character_bg.png', 0, 0, 1, 1)
             # add 'menu' text on menu
             pixel_label.draw_text(self.screen, "Seleccion de personaje", (255, 255, 255), 250, 60, 60)
+            player1_label.draw_text(self.screen, "Jugador1", (255, 255, 255), 90, 380, 60)
+            player2_label.draw_text(self.screen, "Jugador2", (255, 255, 255), 650, 380, 60)
             if character1_button.draw_button():
                 character1_bool = True
                 if player1_character == '':
@@ -60,12 +62,20 @@ class SelectCharacter:
                 else:
                     player2_character = 'img/characters/personaje 3.png'
             if character1_bool:
-
-                img_menu.add_img('img/characters/character1_animation.gif', 100, 90, 10, 10)
+                pos_x = 600
+                if player1_character == 'img/characters/personaje 1.png':
+                    pos_x = 30
+                img_menu.add_img('img/characters/character1_animation.gif', pos_x, 90, 10, 10)
             if character2_bool:
-                img_menu.add_img('img/characters/character2_animation.gif', 100, 100, 10, 10)
+                pos_x = 600
+                if player1_character == 'img/characters/personaje 2.png':
+                    pos_x = 30
+                img_menu.add_img('img/characters/character2_animation.gif', pos_x, 90, 10, 10)
             if character3_bool:
-                img_menu.add_img('img/characters/character3_animation.gif', 100, 100, 10, 10)
+                pos_x = 600
+                if player1_character == 'img/characters/personaje 3.png':
+                    pos_x = 30
+                img_menu.add_img('img/characters/character3_animation.gif', pos_x, 90, 10, 10)
 
             if play_button.draw_button():
                 print("Jugando")
