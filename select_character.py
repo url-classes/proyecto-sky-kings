@@ -29,23 +29,50 @@ class SelectCharacter:
         pixel_label = Label()
         # menu
         img_menu = Img(self.screen)
-
+        player1_character = ''
+        player2_character = ''
+        character1_bool = False
+        character2_bool = False
+        character3_bool = False
+        
         while True:
+
             # add background image
             img_menu.add_img('img/background/select_character_bg.png', 0, 0, 1, 1)
             # add 'menu' text on menu
             pixel_label.draw_text(self.screen, "Seleccion de personaje", (255, 255, 255), 250, 60, 60)
             if character1_button.draw_button():
-                print("personaje 1")
+                character1_bool = True
+                if player1_character == '':
+                    player1_character = 'img/characters/personaje 1.png'
+                else:
+                    player2_character = 'img/characters/personaje 1.png'
             if character2_button.draw_button():
-                print("personaje 2")
+                character2_bool = True
+                if player1_character == '':
+                    player1_character = 'img/characters/personaje 2.png'
+                else:
+                    player2_character = 'img/characters/personaje 2.png'
             if character3_button.draw_button():
-                print("personaje 3")
+                character3_bool = True
+                if player1_character == '':
+                    player1_character = 'img/characters/personaje 3.png'
+                else:
+                    player2_character = 'img/characters/personaje 3.png'
+            if character1_bool:
+
+                img_menu.add_img('img/characters/character1_animation.gif', 100, 90, 10, 10)
+            if character2_bool:
+                img_menu.add_img('img/characters/character2_animation.gif', 100, 100, 10, 10)
+            if character3_bool:
+                img_menu.add_img('img/characters/character3_animation.gif', 100, 100, 10, 10)
+
             if play_button.draw_button():
                 print("Jugando")
                 pygame.mixer.music.pause()
                 play = Play(self.screen)
-                play.play_screen()
+                if player1_character != '':
+                    play.play_screen(player1_character, player2_character)
             if menu.draw_button():
                 break
             for event in pygame.event.get():

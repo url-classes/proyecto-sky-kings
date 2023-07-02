@@ -15,7 +15,7 @@ class Play:
     def __init__(self, screen: surface):
         self.screen = screen
 
-    def play_screen(self):
+    def play_screen(self, character1_path: str, character2_path: str):
         # Game Soundtrack
         pygame.mixer.music.load('Sounds/epic-dramatic-action-trailer-99525.mp3')
         pygame.mixer.music.play(3)
@@ -26,8 +26,8 @@ class Play:
 
         # Game Characters and Elements
         # Declaration of game characters
-        personaje = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
-        personaje1 = SpriteCharacter('personaje 1.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje = SpriteCharacter(character1_path, 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter(character2_path, 3, 7, 1024, 1024, 0.1, back_ground_color)
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
         paredes = [pygame.Rect(0, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
