@@ -3,12 +3,14 @@ import sys
 from pygame import *
 from Colisioner import Colisioner
 from img import Img
+from pass_through_platform import PassThroughPlatform
 from platform import Platform
 from scrollmap import ScrollMap
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
 from CharacterDecorator.ControlCharacter import ControlCharacter
+from solid_platform import SolidPlatform
 
 
 class Play:
@@ -17,7 +19,7 @@ class Play:
 
     def play_screen(self, character1_path: str, character2_path: str):
         # Game Soundtrack
-        pygame.mixer.music.load('Sounds/epic-dramatic-action-trailer-99525.mp3')
+        pygame.mixer.music.load('Sounds/punch.mp3')
         pygame.mixer.music.play(3)
 
         # Auxiliary Variables
@@ -44,10 +46,15 @@ class Play:
 
         # Platform information
         platforms = []
-        platform_positions = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425),
-                              (350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
-        for position in platform_positions:
-            platform = Platform(position[0], position[1], "img/map/platform(0.2).png")
+        pass_through_platforms = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425)]
+        solid_platforms = [(350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
+
+        for position in pass_through_platforms:
+            platform = Platform(position[0], position[1], "img/map/platform(0.2).png", PassThroughPlatform())
+            platforms.append(platform)
+
+        for position in solid_platforms:
+            platform = Platform(position[0], position[1], "img/map/platform(0.2)col.png", SolidPlatform())
             platforms.append(platform)
 
         while True:
@@ -55,10 +62,9 @@ class Play:
             eventos = pygame.event.get()
             personaje.control_move(eventos)
             personaje1.control_move(eventos)
-            personaje.move(paredes)
-            personaje1.move(paredes)
-            for pared in paredes:
-                pygame.draw.rect(self.screen, (255, 0, 0), pared)
+            for platform in platforms:
+                personaje.move([platform.rect])
+                personaje1.move([platform.rect])
 
             # map movement
             # Load map image
@@ -72,7 +78,6 @@ class Play:
                 if not bottom_map:
                     time_until_touch_bottom = pygame.time.get_ticks()
                 bottom_map = True
-
             # Flag to activate MapScroll
             if bottom_map:
                 # Map Scroll
