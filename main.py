@@ -16,7 +16,7 @@ icon = pygame.image.load("img/background/robot.png")
 
 
 def main_menu():
-    pygame.mixer.music.load('Sounds/playing-instant-long-154860.mp3')
+    pygame.mixer.music.load('Sounds/punch.mp3')
     pygame.mixer.music.play()
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_icon(icon)
