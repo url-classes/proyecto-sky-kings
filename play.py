@@ -7,47 +7,58 @@ from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
 from CharacterDecorator.ControlCharacter import ControlCharacter
+from img import Img
+from collide_platform import CollidePlatform
 
 
-pygame.init()
-back_ground_color = (0, 0, 0)
-ventana = Screen(500, 500, 'nose', back_ground_color)
-reloj = pygame.time.Clock()
+class Play:
+    def __init__(self, screen: Surface):
+        self.screen = screen
 
-personaje = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
-personaje1 = SpriteCharacter('personaje 1.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
-personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
-personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
-paredes = [pygame.Rect(0, 80, 50, 50), pygame.Rect(260, 80, 500, 50)]
-up = down = left = rigth = False
-distancia_salto = 0
-doble_salto = True
-index = 0
-reloj.tick(10000)
-while True:
-    ventana.fondear()
-    eventos = pygame.event.get()
-    personaje.control_move(eventos)
-    personaje1.control_move(eventos)
-    personaje.move(paredes)
-    personaje1.move(paredes)
-    for pared in paredes:
-        pygame.draw.rect(ventana.view, (255, 0, 0), pared)
-        pared.y += 1
-        print(pared.y)
-    #if index == 100:
-    #    personaje.update_pose()
-    #    personaje1.update_pose()
-    #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
-    ventana.view.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
-    ventana.view.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
-    for evento in eventos:
-        if evento.type == QUIT:
-            pygame.quit()
-            sys.exit()
-    if index < 100:
-        index += 1
-    else:
+    def play_screen(self):
+        back_ground_color = (0, 0, 0)
+        personaje = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter('personaje 1.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
+        personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
+        paredes = [pygame.Rect(0, 500, 960, 50),
+                   pygame.Rect(270, 350, 170, 50), pygame.Rect(570, 350, 170, 50),
+                   pygame.Rect(65, 100, 170, 50), pygame.Rect(800, 100, 170, 50),
+                   pygame.Rect(300, -150, 170, 50), pygame.Rect(700, -150, 170, 50),
+                   pygame.Rect(250, -350, 170, 50), pygame.Rect(625, -350, 170, 50),
+                   pygame.Rect(250, -550, 170, 50), pygame.Rect(625, -550, 170, 50),
+                   pygame.Rect(250, -650, 170, 50), pygame.Rect(625, -650, 170, 50)]
+        kill_collide = [pygame.Rect(0, 500, 960, 2)]
+        up = down = left = rigth = False
+        distancia_salto = 0
+        doble_salto = True
+
         index = 0
-    pygame.display.update()
-    reloj.tick(40)
+        img_play = Img(self.screen)
+        y_pos = -1080
+        vel = 5
+        collide_platform = CollidePlatform('img/map/platform(0.2)col.png', self.screen, paredes)
+        while True:
+            img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
+            eventos = pygame.event.get()
+            personaje.control_move(eventos)
+            personaje1.control_move(eventos)
+            personaje.move(paredes)
+            personaje1.move(paredes)
+            collide_platform.draw_platform(vel)
+            #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
+            self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
+            self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
+            for evento in eventos:
+                if evento.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+            if index < 10:
+                index += 1
+            else:
+                index = 0
+            pygame.display.update()
+            reloj = pygame.time.Clock()
+            if y_pos < 0:
+                y_pos += vel
+            reloj.tick(40)

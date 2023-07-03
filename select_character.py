@@ -4,7 +4,7 @@ import sys
 from label import Label
 from img import Img
 from button import Button
-
+from play import Play
 
 class SelectCharacter:
     def __init__(self, screen: surface):
@@ -23,7 +23,7 @@ class SelectCharacter:
         pixel_label = Label()
         # menu
         img_menu = Img(self.screen)
-
+        play = Play(self.screen)
         while True:
             # add background image
             img_menu.add_img('img/background/select_character_bg.png', 0, 0, 1, 1)
@@ -38,6 +38,8 @@ class SelectCharacter:
                 print("personaje 3")
             if play_button.draw_button():
                 print("Jugando")
+
+                play.play_screen()
             if menu.draw_button():
                 break
             for event in pygame.event.get():
@@ -49,4 +51,4 @@ class SelectCharacter:
                     sys.exit()
             pygame.display.update()
             clock = pygame.time.Clock()
-            clock.tick(60)
+            clock.tick(40)
