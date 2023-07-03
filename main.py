@@ -26,9 +26,10 @@ def main_menu():
     # menu
     img_menu = Img(screen)
     # buttons
-    play_button = Button(360, 230, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png", screen, 15, 1, 1)
+    play_button = Button(360, 230, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png",
+                         screen, 15, 1, 1, "Jugar", 85, 25, 10)
     option_button = Button(360, 370, "img/buttons/option_button.png", "img/buttons/option_button_pressed.png",
-                           screen, 16, 1, 1)
+                           screen, 16, 1, 1, "Opciones", 65, 15, 10)
     play = SelectCharacter(screen)
     options = Options(screen)
     while True:
@@ -42,11 +43,9 @@ def main_menu():
         if play_button.draw_button():
             pygame.mixer.music.pause()
             play.play_screen()
-        pixel_label.draw_text(screen, "Jugar", (255, 255, 255), 390, 235, 85)
         # options
         if option_button.draw_button():
             options.option_screen()
-        pixel_label.draw_text(screen, "Opciones", (255, 255, 255), 375, 380, 65)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.K_SPACE:
