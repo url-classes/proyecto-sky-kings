@@ -52,7 +52,7 @@ def main_menu():
                 sys.exit()
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(40)
 
 
 main_menu()
