@@ -2,6 +2,7 @@ import pygame
 import sys
 from pygame import *
 from Screen import Screen
+from Colisioner import Colisioner
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
@@ -17,11 +18,12 @@ personaje = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_groun
 personaje1 = SpriteCharacter('personaje 1.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
 personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
 personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
-paredes = [pygame.Rect(0, 350, 50, 50), pygame.Rect(260, 350, 500, 50)]
+paredes = [pygame.Rect(0, 80, 50, 50), pygame.Rect(260, 80, 500, 50)]
 up = down = left = rigth = False
 distancia_salto = 0
 doble_salto = True
 index = 0
+reloj.tick(10000)
 while True:
     ventana.fondear()
     eventos = pygame.event.get()
@@ -31,6 +33,8 @@ while True:
     personaje1.move(paredes)
     for pared in paredes:
         pygame.draw.rect(ventana.view, (255, 0, 0), pared)
+        pared.y += 1
+        print(pared.y)
     #if index == 100:
     #    personaje.update_pose()
     #    personaje1.update_pose()
