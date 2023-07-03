@@ -12,7 +12,7 @@ pygame.init()
 # set screen
 screen_width = 960
 screen_height = 540
-progress_bar = ProgressBar(screen_width, screen_height, (0, 0, 0), (0, 0, 255), (255, 255, 255))
+progress_bar = ProgressBar(screen_width, screen_height, (0, 0, 0), (0, 0, 255), (255, 255, 255), "Sounds/gun.wav")
 progress_bar.run()
 pygame.display.set_caption("SKY KINGS")
 icon = pygame.image.load("img/background/robot.png")

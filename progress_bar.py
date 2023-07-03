@@ -3,10 +3,11 @@ import pygame
 from bar import Bar
 
 class ProgressBar(Bar):
-    def __init__(self, width, height, background_color, bar_color, text_color):
+    def __init__(self, width, height, background_color, bar_color, text_color, sound_file):
         super().__init__(width, height, 100, bar_color)
         self.background_color = background_color
         self.text_color = text_color
+        self.sound_file = sound_file
 
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -14,6 +15,10 @@ class ProgressBar(Bar):
 
         # Configurar la fuente del texto
         self.font = pygame.font.Font(None, 30)
+
+        # Cargar el sonido de inicio
+        pygame.mixer.init()
+        self.start_sound = pygame.mixer.Sound(self.sound_file)
 
     def show(self, progress):
         bar_width = 300
@@ -40,6 +45,8 @@ class ProgressBar(Bar):
         pygame.display.flip()
 
     def run(self):
+        # Reproducir el sonido de inicio
+        self.play_start_sound()
         loading_progress = 0.0
         while loading_progress <= 1.0:
             for event in pygame.event.get():
@@ -55,3 +62,6 @@ class ProgressBar(Bar):
 
             # Controlar la velocidad de actualización
             self.clock.tick(30)
+
+    def play_start_sound(self):
+        self.start_sound.play()
