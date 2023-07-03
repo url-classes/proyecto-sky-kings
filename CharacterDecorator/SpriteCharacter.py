@@ -3,19 +3,29 @@ import pygame
 from SpriteSheet import SpriteSheet
 from Colisioner import Colisioner
 from CharacterDecorator.Character import Character
+from CharacterStates.PoseStatic import PoseStatic
+from CharacterStates.PoseJump import PoseJump
+from CharacterStates.PoseRun import PoseRun
 
 
 class SpriteCharacter(Character):
     def move(self, walls: list[Rect], movement=None):
         if movement is None:
             movement = [0, 0]
+        if movement == [0, 0]:
+            self.pose = PoseStatic(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
+        elif not Colisioner.tocar_suelo(self.hitbox, walls):
+            self.pose = PoseJump(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
+        elif movement[0] != 0:
+            self.pose = PoseRun(self, self.pose.current_pose, self.pose.current_pose, self.pose.delay)
 
     def __init__(self, ruta_sprite: str, no_estados: int, no_poses: int, resolucion_x: int, resolucion_y: int,
                  escala: float, color_fondo: (int, int, int)):
         self.frames: list[list[Surface]] = []
         self.previous_pose = 0
         self.current_pose = 0
-        self.state = 0
+        self.pose = PoseStatic(self)
+        # self.state = StateNeutral(self)
         spriter = SpriteSheet(ruta_sprite)
         for index1 in range(no_estados):
             self.frames.append([])
@@ -42,7 +52,8 @@ class SpriteCharacter(Character):
             self.previous_pose = ant
 
     def get_actual_frame(self) -> Surface:
-        return self.frames[self.state][self.current_pose]
+        self.pose.move()
+        return self.frames[0][self.pose.current_pose]
 
     def set_state(self, estado: int):
         self.state = estado
