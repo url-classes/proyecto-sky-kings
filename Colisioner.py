@@ -18,7 +18,7 @@ class Colisioner:
     @staticmethod
     def tocar_suelo(personaje: Rect, paredes: list[Rect]) -> bool:
         for pared in paredes:
-            if personaje.bottom == pared.top:
+            if pared.top - 10 < personaje.bottom < pared.top:
                 if personaje.left < pared.right and personaje.right > pared.left:
                     return True
         return False
@@ -42,7 +42,9 @@ class Colisioner:
         return personaje
 
     @staticmethod
-    def move_gravity(character: Rect, walls: list[Rect], move: [int, int]):
-        move[1] += 8
+    def move_gravity(character: Rect, walls: list[Rect], move=None):
+        if move is None:
+            move = [0, 0]
+        move[1] -= 8
         return Colisioner.moviminento_prueba(character, walls, move)
 

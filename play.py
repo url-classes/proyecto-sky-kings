@@ -2,6 +2,7 @@ import pygame
 import sys
 from pygame import *
 from Screen import Screen
+from Colisioner import Colisioner
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
@@ -31,6 +32,7 @@ class Play:
         up = down = left = rigth = False
         distancia_salto = 0
         doble_salto = True
+
         index = 0
         img_play = Img(self.screen)
         y_pos = -1080
@@ -44,9 +46,6 @@ class Play:
             personaje.move(paredes)
             personaje1.move(paredes)
             collide_platform.draw_platform(vel)
-            if index == 10:
-                personaje.update_pose()
-                personaje1.update_pose()
             #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
             self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
             self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
