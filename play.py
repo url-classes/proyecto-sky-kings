@@ -33,7 +33,6 @@ class Play:
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
         paredes = [pygame.Rect(0, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
-        up = down = left = rigth = False
         distancia_salto = 0
         doble_salto = True
         index = 0
@@ -41,9 +40,6 @@ class Play:
 
         # Variables for map scrolling
         map_y_position: int = -1080
-        bottom_map: bool = False
-        time_until_touch_bottom: int = 0
-        stop_platforms: bool = False
 
         # Platform information
         platforms: list[Platform] = []
@@ -69,37 +65,26 @@ class Play:
 
             # map movement
             # Load map image
-            if not bottom_map:
-                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
-                for platform in platforms:
-                    self.screen.blit(platform.image, platform.rect)
+            img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+            for platform in platforms:
+                self.screen.blit(platform.image, platform.rect)
 
-            # Check if characters touch the ground before moving the map and platforms
-            if Colisioner.tocar_suelo(personaje1.get_hitbox(), paredes):
-                if not bottom_map:
-                    time_until_touch_bottom = pygame.time.get_ticks()
-                bottom_map = True
-            # Flag to activate MapScroll
-            if bottom_map:
-                # Map Scroll
-                scroll_info = ScrollMap()
-                tiempo: int = int((pygame.time.get_ticks() - time_until_touch_bottom)/40)
-                # Update Scroll information
-                if scroll_info.get_scroll() < tiempo*2:
-                    scroll_info.update_scroll(tiempo*2)
-                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
-                # Plataforms
-                for platform in platforms:
-                    self.screen.blit(platform.image, platform.rect)
-                    if platform.rect.y > 540:
-                        platform.update_vertical_position(0) # Reposition platforms when reaching the bottom
-                    else:
-                        if not stop_platforms:
-                            platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
-                if -1080 + scroll_info.get_scroll() <= 0:
-                    map_y_position = -1080 + scroll_info.get_scroll()
+            # Map Scroll
+            scroll_info = ScrollMap()
+            tiempo: int = int(pygame.time.get_ticks()/40)
+            # Update Scroll information
+            if scroll_info.get_scroll() < tiempo*2:
+                scroll_info.update_scroll(tiempo*2)
+            img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+            # Platforms
+            for platform in platforms:
+                self.screen.blit(platform.image, platform.rect)
+                if platform.rect.y > 540:
+                    platform.update_vertical_position(0)  # Reposition platforms when reaching the bottom
                 else:
-                    stop_platforms = True
+                    platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
+            if -1080 + scroll_info.get_scroll() <= 0:
+                map_y_position = -1080 + scroll_info.get_scroll()
 
             if index == 10:
                 # Change character sprites
