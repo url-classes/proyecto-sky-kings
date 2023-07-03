@@ -9,11 +9,12 @@ from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
 from CharacterDecorator.ControlCharacter import ControlCharacter
-
+from health_bar import HealthBar
 
 class Play:
     def __init__(self, screen: surface):
         self.screen = screen
+        self.health_bar = HealthBar(100, 10)
 
     def play_screen(self):
         # Game Soundtrack
@@ -113,5 +114,6 @@ class Play:
                 index += 1
             else:
                 index = 0
+            self.health_bar.draw(self.screen, 10, 10)
             pygame.display.update()
             clock.tick(40)
