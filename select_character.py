@@ -15,15 +15,16 @@ class SelectCharacter:
         pygame.mixer.music.load('Sounds/punch.mp3')
         pygame.mixer.music.play()
         # buttons
-        menu = Button(5, 0, "img/buttons/menu_button.png", "img/buttons/menu_button_pressed.png", self.screen, 6, 1, 1)
+        menu = Button(5, 0, "img/buttons/menu_button.png", "img/buttons/menu_button_pressed.png",
+                      self.screen, 6, 1, 1, '', 1, 0, 0)
         character1_button = Button(350, 355, "img/characters/character1_frame.png",
-                                   "img/characters/character1_frame_selected.png", self.screen, 0, 3, 3)
+                                   "img/characters/character1_frame_selected.png", self.screen, 0, 3, 3, '', 1, 0, 0)
         character2_button = Button(450, 355, "img/characters/character2_frame.png",
-                                   "img/characters/character2_frame_selected.png", self.screen, 0, 3, 3)
+                                   "img/characters/character2_frame_selected.png", self.screen, 0, 3, 3, '', 1, 0, 0)
         character3_button = Button(550, 355, "img/characters/character3_frame.png",
-                                   "img/characters/character3_frame_selected.png", self.screen, 0, 3, 3)
+                                   "img/characters/character3_frame_selected.png", self.screen, 0, 3, 3, '', 1, 0, 0)
         play_button = Button(390, 440, "img/buttons/playbutton.png", "img/buttons/playbutton_pressed.png",
-                             self.screen, 15, 0.75, 0.75)
+                             self.screen, 15, 0.75, 0.75, 'Empezar', 50, 15, 10)
         # images
         pixel_label = Label()
         player1_label = Label()
