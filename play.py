@@ -40,6 +40,7 @@ class Play:
 
         # Variables for map scrolling
         map_y_position: int = -1080
+        stop_platforms: bool = False
 
         # Platform information
         platforms: list[Platform] = []
@@ -63,28 +64,30 @@ class Play:
                 personaje.move([platform.rect])
                 personaje1.move([platform.rect])
 
-            # map movement
-            # Load map image
-            img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
-            for platform in platforms:
-                self.screen.blit(platform.image, platform.rect)
-
             # Map Scroll
             scroll_info = ScrollMap()
             tiempo: int = int(pygame.time.get_ticks()/40)
             # Update Scroll information
             if scroll_info.get_scroll() < tiempo*2:
                 scroll_info.update_scroll(tiempo*2)
+
+            # Load map image
             img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
+
             # Platforms
             for platform in platforms:
                 self.screen.blit(platform.image, platform.rect)
                 if platform.rect.y > 540:
                     platform.update_vertical_position(0)  # Reposition platforms when reaching the bottom
-                else:
+                elif not stop_platforms:
                     platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
+
+            # Map Scroll
             if -1080 + scroll_info.get_scroll() <= 0:
                 map_y_position = -1080 + scroll_info.get_scroll()
+            else:
+                if -1080 + scroll_info.get_scroll() <= 120:
+                    stop_platforms = True
 
             if index == 10:
                 # Change character sprites
@@ -107,5 +110,6 @@ class Play:
                 index += 1
             else:
                 index = 0
+
             pygame.display.update()
             clock.tick(40)

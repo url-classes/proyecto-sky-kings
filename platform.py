@@ -5,8 +5,9 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, image_path, platform_type):
         super().__init__()
         self.original_image = pygame.image.load(image_path).convert_alpha()
-        self.image = pygame.transform.scale(self.original_image, (self.original_image.get_width() // 1,
-                                                                  self.original_image.get_height() // 1))
+        new_width = self.original_image.get_width() * 3 // 4  # Reducing width to 3/4
+        new_height = self.original_image.get_height() * 3 // 4  # Reducing height to 3/4
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
