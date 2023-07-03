@@ -6,6 +6,7 @@ from img import Img
 from button import Button
 from play import Play
 
+
 class SelectCharacter:
     def __init__(self, screen: surface):
         self.screen = screen
@@ -30,7 +31,11 @@ class SelectCharacter:
         player2_label = Label()
         # menu
         img_menu = Img(self.screen)
-        play = Play(self.screen)
+        player1_character = ''
+        player2_character = ''
+        character1_bool = False
+        character2_bool = False
+        character3_bool = False
         while True:
 
             # add background image
@@ -75,8 +80,10 @@ class SelectCharacter:
 
             if play_button.draw_button():
                 print("Jugando")
-
-                play.play_screen()
+                pygame.mixer.music.pause()
+                play = Play(self.screen)
+                if player1_character != '':
+                    play.play_screen(player1_character, player2_character)
             if menu.draw_button():
                 break
             for event in pygame.event.get():
@@ -88,4 +95,4 @@ class SelectCharacter:
                     sys.exit()
             pygame.display.update()
             clock = pygame.time.Clock()
-            clock.tick(40)
+            clock.tick(60)
