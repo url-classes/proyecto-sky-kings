@@ -1,12 +1,11 @@
-import pygame
 import sys
+import pygame
+from bar import Bar
 
-class ProgressBar:
+class ProgressBar(Bar):
     def __init__(self, width, height, background_color, bar_color, text_color):
-        self.width = width
-        self.height = height
+        super().__init__(width, height, 100, bar_color)
         self.background_color = background_color
-        self.bar_color = bar_color
         self.text_color = text_color
 
         pygame.init()
@@ -27,10 +26,10 @@ class ProgressBar:
         self.screen.fill(self.background_color)
 
         # Dibujar la barra de carga vacía
-        pygame.draw.rect(self.screen, self.bar_color, (bar_x, bar_y, bar_width, bar_height), 2)
+        pygame.draw.rect(self.screen, self.color, (bar_x, bar_y, bar_width, bar_height), 2)
 
         # Dibujar la barra de progreso
-        pygame.draw.rect(self.screen, self.bar_color, (bar_x, bar_y, progress_width, bar_height))
+        pygame.draw.rect(self.screen, self.color, (bar_x, bar_y, progress_width, bar_height))
 
         # Mostrar texto
         text = self.font.render("Loading...", True, self.text_color)

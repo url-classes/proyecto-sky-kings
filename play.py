@@ -14,7 +14,7 @@ from health_bar import HealthBar
 class Play:
     def __init__(self, screen: surface):
         self.screen = screen
-        self.health_bar = HealthBar(100, 10)
+        self.health_bar = HealthBar(200, 10)
 
     def play_screen(self):
         # Game Soundtrack
