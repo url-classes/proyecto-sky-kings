@@ -40,13 +40,14 @@ class Play:
         img_menu = Img(self.screen)
 
         # Variables for map scrolling
-        map_y_position = -1080
-        bottom_map = False
-        time_until_touch_bottom = 0
+        map_y_position: int = -1080
+        bottom_map: bool = False
+        time_until_touch_bottom: int = 0
+        stop_platforms: bool = False
 
         # Platform information
-        platforms = []
-        pass_through_platforms = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425)]
+        platforms: list[Platform] = []
+        pass_through_platforms: list[(int, int)] = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425)]
         solid_platforms = [(350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
 
         for position in pass_through_platforms:
@@ -74,7 +75,7 @@ class Play:
                     self.screen.blit(platform.image, platform.rect)
 
             # Check if characters touch the ground before moving the map and platforms
-            if Colisioner.tocar_suelo(personaje.get_hitbox(), paredes):
+            if Colisioner.tocar_suelo(personaje1.get_hitbox(), paredes):
                 if not bottom_map:
                     time_until_touch_bottom = pygame.time.get_ticks()
                 bottom_map = True
@@ -91,11 +92,14 @@ class Play:
                 for platform in platforms:
                     self.screen.blit(platform.image, platform.rect)
                     if platform.rect.y > 540:
-                        platform.update_vertical_position(0)
+                        platform.update_vertical_position(0) # Reposition platforms when reaching the bottom
                     else:
-                        platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
+                        if not stop_platforms:
+                            platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
                 if -1080 + scroll_info.get_scroll() <= 0:
-                    map_y_position = -1080 + scroll_info.get_scroll()  # Reposition platforms when reaching the bottom
+                    map_y_position = -1080 + scroll_info.get_scroll()
+                else:
+                    stop_platforms = True
 
             if index == 10:
                 # Change character sprites
