@@ -43,6 +43,7 @@ class Play:
         vel = 2
         collide_platform = CollidePlatform('img/map/platform(0.2)col.png', self.screen, paredes)
         start_ticks = pygame.time.get_ticks()
+        stop_platforms = False
         while True:
             img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
             img_flag.add_img('img/map/finish.png', 360, y_pos-5, 0.45, 0.45)
