@@ -21,8 +21,8 @@ class Play:
         pygame.mixer.music.load('Sounds/punch.mp3')
         pygame.mixer.music.play(3)
         back_ground_color = (0, 0, 0)
-        personaje = SpriteCharacter(path1, 3, 7, 10, 500, 1024, 1024, 0.1, back_ground_color)
-        personaje1 = SpriteCharacter(path2, 3, 7, 80, 500, 1024, 1024, 0.1, back_ground_color)
+        personaje = SpriteCharacter(path1, 3, 7, 300, 500, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter(path2, 3, 7, self.screen.get_height() - 10, 500, 1024, 1024, 0.1, back_ground_color)
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d, K_g)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT, K_k)
         paredes = [pygame.Rect(0, 500, 960, 50),
@@ -61,36 +61,27 @@ class Play:
                 vel = 5
             if stop_platforms:
                 vel = 0
-            personaje.attack(personaje1.get_hitbox())
-            personaje1.attack(personaje.get_hitbox())
+            personaje.attack(personaje1)
+            personaje1.attack(personaje)
+            personaje.die()
+            personaje1.die()
             collide_platform.draw_platform(vel)
-
-
-            # verificar si caen de las plataformas
-            if personaje.get_hitbox().collidelist(kill_collide) != -1:
-                self.health_bar1.current_value = 0
-                self.num_players_fallen += 1
-            if personaje1.get_hitbox().collidelist(kill_collide) != -1:
-                self.health_bar2.current_value = 0
-                self.num_players_fallen += 1
-
             # dibujar barras de salud
-            if self.health_bar1.current_value > 0:
-                pygame.draw.rect(self.screen, (0, 255, 255), (10, 10, self.health_bar1.current_value * 2, 20))
+            if personaje.get_life_points() > 0:
+                pygame.draw.rect(self.screen, (0, 255, 255), (10, 10, personaje.get_life_points() * 2, 20))
             else:
-                pygame.draw.rect(self.screen, (255, 0, 0), (10, 10, self.health_bar1.max_value * 2, 20))
+                pygame.draw.rect(self.screen, (255, 0, 0), (10, 10, 200, 20))
 
-            if self.health_bar2.current_value > 0:
+            if personaje1.get_life_points() > 0:
                 pygame.draw.rect(self.screen, (0, 255, 255), (
-                    self.screen.get_width() - 10 - self.health_bar2.current_value * 2, 10,
-                    self.health_bar2.current_value * 2, 20))
+                    self.screen.get_width() - 10 - personaje1.get_life_points() * 2, 10,
+                    personaje1.get_life_points() * 2, 20))
             else:
                 pygame.draw.rect(self.screen, (255, 0, 0), (
-                    self.screen.get_width() - 10 - self.health_bar2.max_value * 2, 10, self.health_bar2.max_value * 2,
-                    20))
+                    self.screen.get_width() - 10 - 200, 10, 200, 20))
 
             # game over cuando ambos personajes caen
-            if self.health_bar1.current_value == 0 and self.health_bar2.current_value == 0:
+            if personaje.get_life_points() == 0 and personaje1.get_life_points() == 0:
                 self.show_game_over_message()
                 break  # Salir del bucle principal
 
@@ -132,5 +123,5 @@ class Play:
         text_rect = text_surface.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
         self.screen.blit(text_surface, text_rect)
         pygame.display.flip()
-        pygame.time.wait(5000)  # Pausa de 5 sec antes de salir del juego
+        pygame.time.wait(3000)  # Pausa de 5 sec antes de salir del juego
 

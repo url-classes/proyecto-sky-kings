@@ -96,3 +96,6 @@ class SpriteCharacter(Character):
 
     def get_life_points(self) -> int:
         return 0
+
+    def set_life_points(self, damage: int):
+        pass

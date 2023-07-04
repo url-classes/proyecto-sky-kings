@@ -20,6 +20,12 @@ class FisicCharacter(Character):
         else:
             return self.character.get_life_points()
 
+    def set_life_points(self, damage: int):
+        if type(self.character) == SpriteCharacter:
+            self.life_points -= damage
+        else:
+            self.character.set_life_points(damage)
+
     def update_pose(self):
         self.character.update_pose()
 
@@ -103,8 +109,8 @@ class FisicCharacter(Character):
 
     def die(self):
         if self.get_hitbox().bottom > 540:
-            self.life_points = 0
-        if self.life_points <= 0:
+            self.set_life_points(self.get_life_points())
+        if self.get_life_points() <= 0:
             return True
         else:
             return False
