@@ -16,7 +16,7 @@ class ProgressBar(Bar):
         # Configurar la fuente del texto
         self.font = pygame.font.Font(None, 30)
 
-        # Cargar el sonido de inicio
+        # cargar sonindo
         pygame.mixer.init()
         self.start_sound = pygame.mixer.Sound(self.sound_file)
 
@@ -36,7 +36,6 @@ class ProgressBar(Bar):
         # Dibujar la barra de progreso
         pygame.draw.rect(self.screen, self.color, (bar_x, bar_y, progress_width, bar_height))
 
-        # Mostrar texto
         text = self.font.render("Loading...", True, self.text_color)
         text_rect = text.get_rect(center=(self.width // 2, self.height // 2 - 50))
         self.screen.blit(text, text_rect)
@@ -45,7 +44,6 @@ class ProgressBar(Bar):
         pygame.display.flip()
 
     def run(self):
-        # Reproducir el sonido de inicio
         self.play_start_sound()
         loading_progress = 0.0
         while loading_progress <= 1.0:
