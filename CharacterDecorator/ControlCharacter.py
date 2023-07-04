@@ -26,7 +26,6 @@ class ControlCharacter(FisicCharacter):
             movement[0] += 5
         if self.press_left:
             movement[0] -= 5
-        print(movement[0])
         self.character.move(walls, movement)
 
     def control_move(self, eventos: event):

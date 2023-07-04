@@ -1,9 +1,11 @@
 import pygame
 from pygame import surface
+from label import Label
 
 
 class Button:
-    def __init__(self, x: int, y: int, path: str, path2: str, screen: surface, disp: int, scale_x: float, scale_y: float):
+    def __init__(self, x: int, y: int, path: str, path2: str, screen: surface,
+                 disp: int, scale_x: float, scale_y: float, text: str, size: int, x_text: int, y_text:int):
         self.image = []
         self.image.append(pygame.image.load(path).convert_alpha())
         self.image.append(pygame.image.load(path2).convert_alpha())
@@ -18,6 +20,11 @@ class Button:
         self.screen: surface = screen
         self.clicked: bool = False
         self.disp: int = disp
+        self.text: str = text
+        self.label: Label = Label()
+        self.size = size
+        self.x_text = x_text
+        self.y_text = y_text
 
     def draw_button(self):
         pos = pygame.mouse.get_pos()
@@ -32,4 +39,6 @@ class Button:
                 return True
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
-        self.screen.blit(self.image[image_index], (self.rect.x, self.rect.y + disp))
+            self.screen.blit(self.image[image_index], (self.rect.x, self.rect.y + disp))
+            self.label.draw_text(self.screen, self.text, (255, 255, 255),  self.rect.x+self.x_text,
+                                 self.rect.y + disp+self.y_text, self.size)
