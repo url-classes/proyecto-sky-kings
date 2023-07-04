@@ -133,5 +133,4 @@ class Play:
         self.screen.blit(text_surface, text_rect)
         pygame.display.flip()
         pygame.time.wait(5000)  # Pausa de 5 sec antes de salir del juego
-        pygame.quit()
-        sys.exit()
+

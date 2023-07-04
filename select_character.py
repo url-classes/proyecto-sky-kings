@@ -82,7 +82,7 @@ class SelectCharacter:
                 pygame.mixer.music.pause()
                 if player1_character != '':
                     play.play_screen(player1_character, player2_character)
-
+                break
             if menu.draw_button():
                 break
             for event in pygame.event.get():
