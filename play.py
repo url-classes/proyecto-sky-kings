@@ -23,8 +23,8 @@ class Play:
         back_ground_color = (0, 0, 0)
         personaje = SpriteCharacter(path1, 3, 7, 1024, 1024, 0.1, back_ground_color)
         personaje1 = SpriteCharacter(path2, 3, 7, 1024, 1024, 0.1, back_ground_color)
-        personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
-        personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
+        personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d, K_g)
+        personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT, K_k)
         paredes = [pygame.Rect(0, 500, 960, 50),
                    pygame.Rect(270, 350, 170, 50), pygame.Rect(570, 350, 170, 50),
                    pygame.Rect(65, 100, 170, 50), pygame.Rect(800, 100, 170, 50),
@@ -40,7 +40,7 @@ class Play:
         index = 0
         img_play = Img(self.screen)
         y_pos = -1080
-        vel = 5
+        vel = 2
         collide_platform = CollidePlatform('img/map/platform(0.2)col.png', self.screen, paredes)
         while True:
             img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
@@ -49,6 +49,8 @@ class Play:
             personaje1.control_move(eventos)
             personaje.move(paredes)
             personaje1.move(paredes)
+            personaje.attack(personaje1.get_hitbox())
+            personaje1.attack(personaje.get_hitbox())
             collide_platform.draw_platform(vel)
             #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
             self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
