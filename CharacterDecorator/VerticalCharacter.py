@@ -2,6 +2,7 @@ from CharacterDecorator.FisicCharacter import FisicCharacter
 from pygame import Rect
 from Colisioner import Colisioner
 from CharacterDecorator.Character import Character
+import pygame
 
 
 class VerticalCharacter(FisicCharacter):
@@ -16,6 +17,8 @@ class VerticalCharacter(FisicCharacter):
         if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump) and movement[1] < Colisioner.gravity():
             print(Colisioner.tocar_suelo(self.get_hitbox(), walls))
             self.jump_distance = 8
+            pygame.mixer.music.load('Sounds/jump.mp3')
+            pygame.mixer.music.play()
             if self.double_jump and not Colisioner.tocar_suelo(self.get_hitbox(), walls):
                 self.double_jump = False
         if Colisioner.tocar_suelo(self.get_hitbox(), walls):

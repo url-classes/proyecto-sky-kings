@@ -8,7 +8,7 @@ class FisicCharacter(Character):
     def __init__(self, character: Character, life_points: int = 100):
         self.character = character
         if type(self.character) == SpriteCharacter:
-            self.hitbox = pygame.Rect(0, 0, self.get_actual_frame().get_width() - 30, self.get_actual_frame().get_height() - 20)
+            self.hitbox = pygame.Rect(self.character.get_x_coordinate(), self.character.get_y_coordinate(), self.get_actual_frame().get_width() - 30, self.get_actual_frame().get_height() - 20)
             self.life_points = life_points
         else:
             self.hitbox = self.character.get_hitbox()

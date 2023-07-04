@@ -2,9 +2,6 @@ import pygame
 import sys
 from pygame import *
 
-from Screen import Screen
-from Colisioner import Colisioner
-
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
@@ -21,8 +18,8 @@ class Play:
         pygame.mixer.music.load('Sounds/punch.mp3')
         pygame.mixer.music.play(3)
         back_ground_color = (0, 0, 0)
-        personaje = SpriteCharacter(path1, 3, 7, 1024, 1024, 0.1, back_ground_color)
-        personaje1 = SpriteCharacter(path2, 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje = SpriteCharacter(path1, 3, 7, 10, 500, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter(path2, 3, 7, 80, 500, 1024, 1024, 0.1, back_ground_color)
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d, K_g)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT, K_k)
         paredes = [pygame.Rect(0, 500, 960, 50),
