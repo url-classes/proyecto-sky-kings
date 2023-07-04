@@ -15,6 +15,7 @@ class VerticalCharacter(FisicCharacter):
         self.character.move(walls, movement)
         movement[1] += 8
         if self.jump_distance < -12 and (Colisioner.tocar_suelo(self.character.get_hitbox(), walls) or self.double_jump) and movement[1] < 8:
+            print(Colisioner.tocar_suelo(self.character.get_hitbox(), walls))
             self.jump_distance = 8
             if self.double_jump and not Colisioner.tocar_suelo(self.character.get_hitbox(), walls):
                 self.double_jump = False
