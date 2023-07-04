@@ -40,8 +40,9 @@ class Play:
         img_play = Img(self.screen)
         img_flag = Img(self.screen)
         y_pos = -1080
-        vel = 5
+        vel = 0
         collide_platform = CollidePlatform('img/map/platform(0.2)col.png', self.screen, paredes)
+        start_ticks = pygame.time.get_ticks()
         while True:
             img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
             img_flag.add_img('img/map/finish.png', 360, y_pos-5, 0.45, 0.45)
@@ -51,6 +52,8 @@ class Play:
             personaje.move(paredes)
             personaje1.move(paredes)
 
+            if pygame.time.get_ticks() - start_ticks >= 5000:
+                vel = 5
             if stop_platforms:
                 vel = 0
 
