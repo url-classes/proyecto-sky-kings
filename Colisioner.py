@@ -46,5 +46,6 @@ class Colisioner:
         if move is None:
             move = [0, 0]
         move[1] -= 8
+
         return Colisioner.moviminento_prueba(character, walls, move)
 

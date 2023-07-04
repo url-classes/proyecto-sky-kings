@@ -1,8 +1,10 @@
 import pygame
 import sys
 from pygame import *
+
 from Screen import Screen
 from Colisioner import Colisioner
+
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
@@ -15,10 +17,12 @@ class Play:
     def __init__(self, screen: Surface):
         self.screen = screen
 
-    def play_screen(self):
+    def play_screen(self, path1: str, path2: str):
+        pygame.mixer.music.load('Sounds/punch.mp3')
+        pygame.mixer.music.play(3)
         back_ground_color = (0, 0, 0)
-        personaje = SpriteCharacter('personaje 2.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
-        personaje1 = SpriteCharacter('personaje 1.png', 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje = SpriteCharacter(path1, 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter(path2, 3, 7, 1024, 1024, 0.1, back_ground_color)
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
         paredes = [pygame.Rect(0, 500, 960, 50),
@@ -53,6 +57,7 @@ class Play:
                 if evento.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
             if index < 10:
                 index += 1
             else:
@@ -62,3 +67,4 @@ class Play:
             if y_pos < 0:
                 y_pos += vel
             reloj.tick(40)
+
