@@ -9,6 +9,7 @@ class PoseRun(CharacterPose):
         self.current_pose = current_pose
         self.delay = delay
 
+
     def set_character(self, character: Character, prev_pose: int, curr_pose: int, delay: int = 5):
         self.character = character
         self.previous_pose = prev_pose

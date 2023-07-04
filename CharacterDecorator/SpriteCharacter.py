@@ -14,15 +14,13 @@ class SpriteCharacter(Character):
         if movement == [0, 0] or movement == [0, Colisioner.gravity()]:
             self.pose = PoseStatic(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
         elif movement[1] != Colisioner.gravity():
-            print('saltando')
-            print(f'{movement[0]}, {movement[1]}')
             self.pose = PoseJump(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
         # elif movement[0] != 0:
         else:
             self.pose = PoseRun(self, self.pose.current_pose, self.pose.current_pose, self.pose.delay)
 
-    def __init__(self, ruta_sprite: str, no_estados: int, no_poses: int, resolucion_x: int, resolucion_y: int,
-                 escala: float, color_fondo: (int, int, int)):
+    def __init__(self, ruta_sprite: str, no_estados: int, no_poses: int, x_coordinate: int, y_coordinate: int,
+                 resolucion_x: int, resolucion_y: int, escala: float, color_fondo: (int, int, int)):
         self.frames: list[list[Surface]] = []
         self.previous_pose = 0
         self.current_pose = 0
@@ -34,8 +32,8 @@ class SpriteCharacter(Character):
             for index in range(no_poses):
                 self.frames[index1].append(spriter.get_image(
                     index1, index, resolucion_x, resolucion_y, escala, color_fondo))
-        self.x_coordinate = 0
-        self.y_coordinate = 0
+        self.x_coordinate = x_coordinate
+        self.y_coordinate = y_coordinate
 
     def update_pose(self):
         if self.current_pose < 6:
