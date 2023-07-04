@@ -16,7 +16,6 @@ class VerticalCharacter(FisicCharacter):
         movement[1] += Colisioner.gravity()
         if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump)\
                 and (movement[1] < Colisioner.gravity()):
-            print(Colisioner.tocar_suelo(self.get_hitbox(), walls))
             self.jump_distance = 8
             pygame.mixer.music.load('Sounds/jump.mp3')
             pygame.mixer.music.play()

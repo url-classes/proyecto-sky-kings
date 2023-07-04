@@ -67,6 +67,8 @@ class Play:
         while True:
             img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
             flag = img_flag.add_img('img/map/finish.png', 360, y_pos-5, 0.45, 0.45)
+            #pygame.draw.rect(self.screen, (255, 255, 255), flag)
+            print(f'{img_flag.x}, {img_flag.y}')
             eventos = pygame.event.get()
             personaje.control_move(eventos)
             personaje1.control_move(eventos)
@@ -107,10 +109,14 @@ class Play:
             if personaje.get_life_points() == 0 and personaje1.get_life_points() == 0:
                 self.show_game_over_message()
                 break  # Salir del bucle principal
-            if personaje.win(flag.get_rect()):
+            # pygame.draw.rect(self.screen, (255, 255, 255), flag.get_rect())
+            # print(f'{flag.get_rect().x}, {flag.get_rect().y}')
+            if personaje.win(flag):
                 self.show_win_message("jugador 1")
-            if personaje1.win(flag.get_rect()):
+                break
+            if personaje1.win(flag):
                 self.show_win_message("jugador 2")
+                break
 
             # pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
             if not personaje.die():
