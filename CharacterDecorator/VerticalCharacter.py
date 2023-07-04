@@ -14,7 +14,11 @@ class VerticalCharacter(FisicCharacter):
 
     def move(self, walls: list[Rect], movement: [int, int] = None):
         movement[1] += Colisioner.gravity()
-        if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump) and movement[1] < Colisioner.gravity():
+        print('saltando')
+        print(f'{movement[0]}, {movement[1]}')
+        print(f'{Colisioner.tocar_suelo(self.get_hitbox(), walls)}')
+        if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump)\
+                and (movement[1] < Colisioner.gravity()):
             print(Colisioner.tocar_suelo(self.get_hitbox(), walls))
             self.jump_distance = 8
             pygame.mixer.music.load('Sounds/jump.mp3')
@@ -24,7 +28,7 @@ class VerticalCharacter(FisicCharacter):
         if Colisioner.tocar_suelo(self.get_hitbox(), walls):
             self.double_jump = True
         if self.jump_distance > 0:
-            movement[1] -= 30
+            movement[1] -= 35
         self.jump_distance -= 1
         self.vertical_lineal_move(walls, movement)
         self.character.move(walls, movement)

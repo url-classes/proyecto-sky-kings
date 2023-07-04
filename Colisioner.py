@@ -18,7 +18,7 @@ class Colisioner:
     @staticmethod
     def tocar_suelo(personaje: Rect, paredes: list[Rect]) -> bool:
         for pared in paredes:
-            if pared.top - 10 < personaje.bottom < pared.top:
+            if pared.top - 10 < personaje.bottom < pared.top + 10:
                 if personaje.left < pared.right and personaje.right > pared.left:
                     return True
         return False

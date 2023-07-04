@@ -14,8 +14,6 @@ class SpriteCharacter(Character):
         if movement == [0, 0] or movement == [0, Colisioner.gravity()]:
             self.pose = PoseStatic(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
         elif movement[1] != Colisioner.gravity():
-            print('saltando')
-            print(f'{movement[0]}, {movement[1]}')
             self.pose = PoseJump(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
         # elif movement[0] != 0:
         else:
