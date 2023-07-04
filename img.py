@@ -13,3 +13,4 @@ class Img:
         height = self.img.get_height()
         self.img = pygame.transform.scale(self.img, (int(scale_x * width), int(scale_y * height)))
         self.screen.blit(self.img, (x, y))
+        return self.img

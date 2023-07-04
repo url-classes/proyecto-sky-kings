@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from pygame import Rect
 
 
 class CharacterPose(metaclass=ABCMeta):

@@ -34,6 +34,7 @@ class SpriteCharacter(Character):
                     index1, index, resolucion_x, resolucion_y, escala, color_fondo))
         self.x_coordinate = x_coordinate
         self.y_coordinate = y_coordinate
+        self.state: int | None = None
 
     def update_pose(self):
         if self.current_pose < 6:

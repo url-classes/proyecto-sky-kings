@@ -41,6 +41,13 @@ class ControlCharacter(FisicCharacter):
                         enemy.x += 100
                     print("ataque")
 
+    def win(self, flag: rect):
+        character_hitbox = self.character.get_hitbox()
+        if character_hitbox.x + 40 >= flag.x >= character_hitbox.x - 50:
+            if character_hitbox.y + 30 >= flag.y >= character_hitbox.y - 50:
+                return True
+        return False
+
     def control_move(self, eventos: event):
         # for evento in pygame.event.get():
         for evento in eventos:
