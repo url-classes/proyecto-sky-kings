@@ -2,6 +2,7 @@ from CharacterDecorator.FisicCharacter import FisicCharacter
 from pygame import Rect
 from Colisioner import Colisioner
 from CharacterDecorator.Character import Character
+import pygame
 
 
 class VerticalCharacter(FisicCharacter):
@@ -12,27 +13,29 @@ class VerticalCharacter(FisicCharacter):
         self.momentum = True
 
     def move(self, walls: list[Rect], movement: [int, int] = None):
-        self.character.move(walls, movement)
-        movement[1] += 8
-        if self.jump_distance < -12 and (Colisioner.tocar_suelo(self.character.get_hitbox(), walls) or self.double_jump) and movement[1] < 8:
-            print(Colisioner.tocar_suelo(self.character.get_hitbox(), walls))
+        movement[1] += Colisioner.gravity()
+        if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump) and movement[1] < Colisioner.gravity():
+            print(Colisioner.tocar_suelo(self.get_hitbox(), walls))
             self.jump_distance = 8
-            if self.double_jump and not Colisioner.tocar_suelo(self.character.get_hitbox(), walls):
+            pygame.mixer.music.load('Sounds/jump.mp3')
+            pygame.mixer.music.play()
+            if self.double_jump and not Colisioner.tocar_suelo(self.get_hitbox(), walls):
                 self.double_jump = False
-        if Colisioner.tocar_suelo(self.character.get_hitbox(), walls):
+        if Colisioner.tocar_suelo(self.get_hitbox(), walls):
             self.double_jump = True
         if self.jump_distance > 0:
             movement[1] -= 30
         self.jump_distance -= 1
         self.vertical_lineal_move(walls, movement)
-        self.character.update_coordinate()
+        self.character.move(walls, movement)
+        self.update_coordinate()
         
     def vertical_lineal_move(self, walls: list[Rect], movement: [int, int] = None):
-        self.character.set_hitbox_y_coordinate(self.character.get_hitbox_y_coordinate() + movement[1])
-        colisiones = Colisioner.get_colisiones(self.character.get_hitbox(), walls)
+        self.set_y_coordinate(self.get_y_coordinate() + movement[1])
+        colisiones = Colisioner.get_colisiones(self.get_hitbox(), walls)
         for colision in colisiones:
             if movement[1] > 0:
-                self.character.set_down(colision.top)
+                self.set_down(colision.top)
             elif movement[1] < 0:
-                self.character.set_up(colision.bottom)
+                self.set_up(colision.bottom)
         

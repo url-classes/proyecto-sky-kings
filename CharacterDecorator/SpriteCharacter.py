@@ -1,5 +1,4 @@
 from pygame import *
-import pygame
 from SpriteSheet import SpriteSheet
 from Colisioner import Colisioner
 from CharacterDecorator.Character import Character
@@ -12,15 +11,18 @@ class SpriteCharacter(Character):
     def move(self, walls: list[Rect], movement=None):
         if movement is None:
             movement = [0, 0]
-        if movement == [0, 0]:
+        if movement == [0, 0] or movement == [0, Colisioner.gravity()]:
             self.pose = PoseStatic(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
-        elif not Colisioner.tocar_suelo(self.hitbox, walls):
+        elif movement[1] != Colisioner.gravity():
+            print('saltando')
+            print(f'{movement[0]}, {movement[1]}')
             self.pose = PoseJump(self, self.pose.previous_pose, self.pose.current_pose, self.pose.delay)
-        elif movement[0] != 0:
+        # elif movement[0] != 0:
+        else:
             self.pose = PoseRun(self, self.pose.current_pose, self.pose.current_pose, self.pose.delay)
 
-    def __init__(self, ruta_sprite: str, no_estados: int, no_poses: int, resolucion_x: int, resolucion_y: int,
-                 escala: float, color_fondo: (int, int, int)):
+    def __init__(self, ruta_sprite: str, no_estados: int, no_poses: int, x_coordinate: int, y_coordinate: int,
+                 resolucion_x: int, resolucion_y: int, escala: float, color_fondo: (int, int, int)):
         self.frames: list[list[Surface]] = []
         self.previous_pose = 0
         self.current_pose = 0
@@ -32,10 +34,8 @@ class SpriteCharacter(Character):
             for index in range(no_poses):
                 self.frames[index1].append(spriter.get_image(
                     index1, index, resolucion_x, resolucion_y, escala, color_fondo))
-        self.hitbox = pygame.Rect(0, 0, self.get_actual_frame().get_width() - 30,
-                                  self.get_actual_frame().get_height() - 20)
-        self.x_coordinate = 0
-        self.y_coordinate = 0
+        self.x_coordinate = x_coordinate
+        self.y_coordinate = y_coordinate
 
     def update_pose(self):
         if self.current_pose < 6:
@@ -59,38 +59,26 @@ class SpriteCharacter(Character):
         self.state = estado
 
     def get_hitbox(self):
-        return self.hitbox
+        pass
 
     def set_up(self, coordinate: int):
-        self.hitbox.top = coordinate
+        pass
 
     def set_down(self, coordinate: int):
-        self.hitbox.bottom = coordinate
+        pass
 
     def set_left(self, coordinate: int):
-        self.hitbox.left = coordinate
+        pass
 
     def set_right(self, coordinate: int):
-        self.hitbox.right = coordinate
+        pass
 
     def set_hitbox(self, hitbox: Rect):
-        self.hitbox = hitbox
-
-    def get_hitbox_x_coordinate(self) -> int:
-        return self.hitbox.x
-
-    def get_hitbox_y_coordinate(self) -> int:
-        return self.hitbox.y
-
-    def set_hitbox_x_coordinate(self, coordinate: int):
-        self.hitbox.x = coordinate
-
-    def set_hitbox_y_coordinate(self, coordinate: int):
-        self.hitbox.y = coordinate
+        self.x_coordinate = hitbox.x
+        self.y_coordinate = hitbox.y
 
     def update_coordinate(self):
-        self.x_coordinate = self.hitbox.x - 15
-        self.y_coordinate = self.hitbox.y - 10
+        pass
 
     def move_position(self, move: [int, int], walls: list[Rect]):
         self.set_hitbox(Colisioner.move_gravity(self.get_hitbox(), walls, move))
@@ -102,5 +90,11 @@ class SpriteCharacter(Character):
     def get_y_coordinate(self) -> int:
         return self.y_coordinate
 
-    def control_move(self, eventos: event):
-        raise NotImplementedError
+    def set_x_coordinate(self, coordinate: int):
+        self.x_coordinate = coordinate
+
+    def set_y_coordinate(self, coordinate: int):
+        self.y_coordinate = coordinate
+
+    def get_life_points(self) -> int:
+        return 0
