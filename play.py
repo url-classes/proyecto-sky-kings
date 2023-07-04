@@ -113,6 +113,9 @@ class Play:
             reloj.tick(40)
 
     def show_game_over_message(self):
+        pygame.mixer.init()
+        game_over_sound = pygame.mixer.Sound('Sounds/gameover.wav')
+        game_over_sound.play()
         font = pygame.font.Font("files/aansa.ttf", 80)
         text_surface = font.render("Game Over", True, (255, 0, 0))
         text_rect = text_surface.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
