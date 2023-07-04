@@ -12,3 +12,6 @@ class HealthBar(Bar):
         self.current_value += amount
         if self.current_value > self.max_value:
             self.current_value = self.max_value
+
+    def get_percentage(self):
+        return self.current_value / self.max_value * 100

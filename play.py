@@ -9,6 +9,7 @@ from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
 from CharacterDecorator.ControlCharacter import ControlCharacter
+from health_bar import HealthBar
 from img import Img
 from collide_platform import CollidePlatform
 
@@ -16,6 +17,8 @@ from collide_platform import CollidePlatform
 class Play:
     def __init__(self, screen: Surface):
         self.screen = screen
+        self.health_bar1 = HealthBar(200, 20)
+        self.health_bar2 = HealthBar(200, 20)
 
     def play_screen(self, path1: str, path2: str):
         pygame.mixer.music.load('Sounds/punch.mp3')
@@ -50,9 +53,38 @@ class Play:
             personaje.move(paredes)
             personaje1.move(paredes)
             collide_platform.draw_platform(vel)
-            #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
+            # pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
+
+            # verificar si caen de las plataformas
+            if personaje.get_hitbox().collidelist(kill_collide) != -1:
+                self.health_bar1.current_value = 0
+            if personaje1.get_hitbox().collidelist(kill_collide) != -1:
+                self.health_bar2.current_value = 0
+
+            # dibujar las barras
+            if self.health_bar1.current_value > 0:
+                pygame.draw.rect(self.screen, (0, 255, 255), (10, 10, self.health_bar1.current_value * 2, 20))
+            else:
+                pygame.draw.rect(self.screen, (255, 0, 0), (10, 10, self.health_bar1.max_value * 2, 20))
+
+            if self.health_bar2.current_value > 0:
+                pygame.draw.rect(self.screen, (0, 255, 255), (
+                    self.screen.get_width() - 10 - self.health_bar2.current_value * 2, 10,
+                    self.health_bar2.current_value * 2, 20))
+            else:
+                pygame.draw.rect(self.screen, (255, 0, 0), (
+                    self.screen.get_width() - 10 - self.health_bar2.max_value * 2, 10, self.health_bar2.max_value * 2,
+                    20))
+            # jugaores
+            font = pygame.font.Font("files/aansa.ttf", 40)
+            text_surface1 = font.render("Jugador 1", True, (255, 255, 255))
+            text_surface2 = font.render("Jugador 2", True, (255, 255, 255))
+            self.screen.blit(text_surface1, (10, 35))
+            self.screen.blit(text_surface2, (self.screen.get_width() - text_surface2.get_width() - 10, 35))
+
             self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
-            self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
+            self.screen.blit(personaje1.get_actual_frame(),
+                             (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
             for evento in eventos:
                 if evento.type == QUIT:
                     pygame.quit()
@@ -67,4 +99,3 @@ class Play:
             if y_pos < 0:
                 y_pos += vel
             reloj.tick(40)
-
