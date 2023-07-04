@@ -13,8 +13,8 @@ class ProgressBar(Bar):
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
-        # Configurar la fuente del texto
-        self.font = pygame.font.Font(None, 30)
+        # fuente del texto
+        self.font = pygame.font.Font("files/aansa.ttf", 40)
 
         # cargar sonindo
         pygame.mixer.init()
