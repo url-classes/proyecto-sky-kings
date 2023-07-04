@@ -23,11 +23,11 @@ class ControlCharacter(FisicCharacter):
         if self.press_up:
             movement[1] -= 1
         if self.press_down:
-            movement[1] += 5
+            movement[1] += 10
         if self.press_right:
-            movement[0] += 5
+            movement[0] += 10
         if self.press_left:
-            movement[0] -= 5
+            movement[0] -= 10
         self.character.move(walls, movement)
 
     def attack(self, enemy: Rect):

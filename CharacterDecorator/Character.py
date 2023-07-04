@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from pygame import Surface, Rect, event
+from pygame import Surface, Rect
 
 
 class Character(metaclass=ABCMeta):
@@ -40,22 +40,6 @@ class Character(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def get_hitbox_x_coordinate(self) -> int:
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_hitbox_y_coordinate(self) -> int:
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_hitbox_x_coordinate(self, coordinate: int):
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_hitbox_y_coordinate(self, coordinate: int):
-        raise NotImplementedError
-
-    @abstractmethod
     def update_coordinate(self):
         raise NotImplementedError
 
@@ -72,6 +56,14 @@ class Character(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def control_move(self, eventos: event):
+    def set_x_coordinate(self, coordinate: int) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_y_coordinate(self, coordinate: int) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_life_points(self) -> int:
         raise NotImplementedError
 
