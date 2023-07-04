@@ -2,6 +2,7 @@ from CharacterDecorator.FisicCharacter import FisicCharacter
 from CharacterDecorator.Character import Character
 from pygame import *
 from pygame import Rect
+from Colisioner import Colisioner
 
 
 class ControlCharacter(FisicCharacter):
@@ -30,15 +31,18 @@ class ControlCharacter(FisicCharacter):
             movement[0] -= 10
         self.character.move(walls, movement)
 
-    def attack(self, enemy: Rect):
+    def attack(self, enemy: FisicCharacter):
         if self.press_hit:
             character_hitbox = self.character.get_hitbox()
-            if character_hitbox.x + 40 >= enemy.x >= character_hitbox.x - 50:
-                if character_hitbox.y + 30 >= enemy.y >= character_hitbox.y - 50:
-                    if character_hitbox.x > enemy.x:
-                        enemy.x -= 100
-                    elif character_hitbox.x < enemy.x:
-                        enemy.x += 100
+            enemy_hitbox = enemy.get_hitbox()
+            if Colisioner.comprobar_colision(character_hitbox, enemy_hitbox):
+                    if character_hitbox.x > enemy_hitbox.x:
+                        enemy.set_x_coordinate(enemy_hitbox.x - 100)
+                        # enemy.x -= 100
+                    elif character_hitbox.x < enemy_hitbox.x:
+                        enemy.set_x_coordinate(enemy_hitbox.x + 100)
+                        #enemy.x += 100
+                    enemy.set_life_points(10)
                     print("ataque")
 
     def win(self, flag: rect):

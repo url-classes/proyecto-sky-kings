@@ -67,3 +67,7 @@ class Character(metaclass=ABCMeta):
     def get_life_points(self) -> int:
         raise NotImplementedError
 
+    @abstractmethod
+    def set_life_points(self, damage: int):
+        raise NotImplementedError
+

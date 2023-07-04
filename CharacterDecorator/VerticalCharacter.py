@@ -14,9 +14,6 @@ class VerticalCharacter(FisicCharacter):
 
     def move(self, walls: list[Rect], movement: [int, int] = None):
         movement[1] += Colisioner.gravity()
-        print('saltando')
-        print(f'{movement[0]}, {movement[1]}')
-        print(f'{Colisioner.tocar_suelo(self.get_hitbox(), walls)}')
         if self.jump_distance < -6 and (Colisioner.tocar_suelo(self.get_hitbox(), walls) or self.double_jump)\
                 and (movement[1] < Colisioner.gravity()):
             print(Colisioner.tocar_suelo(self.get_hitbox(), walls))
