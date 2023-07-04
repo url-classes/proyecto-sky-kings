@@ -31,7 +31,7 @@ class Play:
                    pygame.Rect(300, -150, 170, 50), pygame.Rect(700, -150, 170, 50),
                    pygame.Rect(250, -350, 170, 50), pygame.Rect(625, -350, 170, 50),
                    pygame.Rect(250, -550, 170, 50), pygame.Rect(625, -550, 170, 50),
-                   pygame.Rect(250, -650, 170, 50), pygame.Rect(625, -650, 170, 50)]
+                   pygame.Rect(250, -750, 170, 50), pygame.Rect(625, -750, 170, 50)]
         kill_collide = [pygame.Rect(0, 500, 960, 2)]
         up = down = left = rigth = False
         distancia_salto = 0
@@ -51,8 +51,10 @@ class Play:
             personaje1.move(paredes)
             collide_platform.draw_platform(vel)
             #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
-            self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
-            self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
+            if not personaje.die():
+                self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
+            if not personaje1.die():
+                self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
             for evento in eventos:
                 if evento.type == QUIT:
                     pygame.quit()

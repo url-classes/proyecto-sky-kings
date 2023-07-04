@@ -49,3 +49,7 @@ class Colisioner:
 
         return Colisioner.moviminento_prueba(character, walls, move)
 
+    @staticmethod
+    def gravity():
+        return 12
+
