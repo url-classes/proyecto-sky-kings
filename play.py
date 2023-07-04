@@ -73,7 +73,7 @@ class Play:
             personaje.move(paredes)
             personaje1.move(paredes)
             if pygame.time.get_ticks() - start_ticks >= 5000:
-                vel = 5
+                vel = 6
             if stop_platforms:
                 vel = 0
             personaje.attack(personaje1)
