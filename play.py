@@ -19,25 +19,23 @@ class Play:
         self.num_players_fallen = 0
 
     def show_game_over_message(self):
-        pygame.mixer.init()
-        game_over_sound = pygame.mixer.Sound('Sounds/gameover.wav')
-        game_over_sound.play()
+        pygame.mixer.music.load('Sounds/gameover.wav')
+        pygame.mixer.music.play()
         label = Label()
         label.draw_text(self.screen, "Game Over", (255, 0, 0), 340, 250, 60)
         pygame.display.flip()
         pygame.time.wait(5000)  # Pausa de 5 sec antes de salir del juego
 
     def show_win_message(self, player: str):
-        pygame.mixer.init()
-        game_over_sound = pygame.mixer.Sound('Sounds/win.mp3')
-        game_over_sound.play()
+        pygame.mixer.music.load('Sounds/win.mp3')
+        pygame.mixer.music.play()
         label = Label()
         label.draw_text(self.screen, player+" Gano", (0, 255, 0), 340, 250, 60)
         pygame.display.flip()
         pygame.time.wait(5000)  # Pausa de 5 sec antes de salir del juego
 
     def play_screen(self, path1: str, path2: str):
-        pygame.mixer.music.load('Sounds/punch.mp3')
+        pygame.mixer.music.load('Sounds/epic-dramatic-action-trailer-99525.mp3')
         pygame.mixer.music.play(3)
         back_ground_color = (0, 0, 0)
         personaje = SpriteCharacter(path1, 3, 7, 300, 500, 1024, 1024, 0.1, back_ground_color)
