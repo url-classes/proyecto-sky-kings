@@ -5,7 +5,7 @@ from label import Label
 
 class Button:
     def __init__(self, x: int, y: int, path: str, path2: str, screen: surface,
-                 disp: int, scale_x: float, scale_y: float, text: str, size: int, x_text: int, y_text:int):
+                 disp: int, scale_x: float, scale_y: float, text: str, size: int, x_text: int, y_text: int):
         self.image = []
         self.image.append(pygame.image.load(path).convert_alpha())
         self.image.append(pygame.image.load(path2).convert_alpha())

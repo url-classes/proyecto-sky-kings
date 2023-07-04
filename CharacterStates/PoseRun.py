@@ -9,14 +9,13 @@ class PoseRun(CharacterPose):
         self.current_pose = current_pose
         self.delay = delay
 
-
     def set_character(self, character: Character, prev_pose: int, curr_pose: int, delay: int = 5):
         self.character = character
         self.previous_pose = prev_pose
         self.current_pose = curr_pose
         self.delay = delay
 
-    def move1(self, movement = None):
+    def move1(self, movement: list[int, int] | None = None):
         if movement is None:
             movement = [0, 0]
         if movement[0] != 0:

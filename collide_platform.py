@@ -4,7 +4,7 @@ from img import Img
 
 
 class CollidePlatform(Platform):
-    def __init__(self, path, screen: Surface, walls: list[list[int]]):
+    def __init__(self, path: str, screen: Surface, walls: list[list[int]]):
         self.path = path
         self.screen = screen
         self.walls = walls
