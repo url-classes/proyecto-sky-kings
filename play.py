@@ -1,115 +1,59 @@
 import pygame
 import sys
 from pygame import *
+
+from Screen import Screen
 from Colisioner import Colisioner
-from img import Img
-from pass_through_platform import PassThroughPlatform
-from platform import Platform
-from scrollmap import ScrollMap
+
 from CharacterDecorator.SpriteCharacter import SpriteCharacter
 from CharacterDecorator.HorizontalCharacter import HorizontalCharacter
 from CharacterDecorator.VerticalCharacter import VerticalCharacter
 from CharacterDecorator.ControlCharacter import ControlCharacter
-from solid_platform import SolidPlatform
+from img import Img
+from collide_platform import CollidePlatform
 
 
 class Play:
-    def __init__(self, screen: surface):
+    def __init__(self, screen: Surface):
         self.screen = screen
 
-    def play_screen(self, character1_path: str, character2_path: str):
-        # Game Soundtrack
+    def play_screen(self, path1: str, path2: str):
         pygame.mixer.music.load('Sounds/punch.mp3')
         pygame.mixer.music.play(3)
-
-        # Auxiliary Variables
         back_ground_color = (0, 0, 0)
-        clock = pygame.time.Clock()
-
-        # Game Characters and Elements
-        # Declaration of game characters
-        personaje = SpriteCharacter(character1_path, 3, 7, 1024, 1024, 0.1, back_ground_color)
-        personaje1 = SpriteCharacter(character2_path, 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje = SpriteCharacter(path1, 3, 7, 1024, 1024, 0.1, back_ground_color)
+        personaje1 = SpriteCharacter(path2, 3, 7, 1024, 1024, 0.1, back_ground_color)
         personaje = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje)), K_w, K_s, K_a, K_d)
         personaje1 = ControlCharacter(VerticalCharacter(HorizontalCharacter(personaje1)), K_UP, K_DOWN, K_LEFT, K_RIGHT)
-        paredes = [pygame.Rect(0, 350, 50, 50), pygame.Rect(260, 350, 50, 50)]
+        paredes = [pygame.Rect(0, 500, 960, 50),
+                   pygame.Rect(270, 350, 170, 50), pygame.Rect(570, 350, 170, 50),
+                   pygame.Rect(65, 100, 170, 50), pygame.Rect(800, 100, 170, 50),
+                   pygame.Rect(300, -150, 170, 50), pygame.Rect(700, -150, 170, 50),
+                   pygame.Rect(250, -350, 170, 50), pygame.Rect(625, -350, 170, 50),
+                   pygame.Rect(250, -550, 170, 50), pygame.Rect(625, -550, 170, 50),
+                   pygame.Rect(250, -650, 170, 50), pygame.Rect(625, -650, 170, 50)]
+        kill_collide = [pygame.Rect(0, 500, 960, 2)]
         up = down = left = rigth = False
         distancia_salto = 0
         doble_salto = True
+
         index = 0
-        img_menu = Img(self.screen)
-
-        # Variables for map scrolling
-        map_y_position = -1080
-        bottom_map = False
-        time_until_touch_bottom = 0
-
-        # Platform information
-        platforms = []
-        pass_through_platforms = [(50, 175), (250, 275), (450, 375), (650, 75), (150, 425)]
-        solid_platforms = [(350, 125), (550, 225), (750, 325), (200, 25), (400, 475)]
-
-        for position in pass_through_platforms:
-            platform = Platform(position[0], position[1], "img/map/platform(0.2).png", PassThroughPlatform())
-            platforms.append(platform)
-
-        for position in solid_platforms:
-            platform = Platform(position[0], position[1], "img/map/platform(0.2)col.png", SolidPlatform())
-            platforms.append(platform)
-
+        img_play = Img(self.screen)
+        y_pos = -1080
+        vel = 5
+        collide_platform = CollidePlatform('img/map/platform(0.2)col.png', self.screen, paredes)
         while True:
-            # Character movements
+            img_play.add_img('img/map/map.png', 0, y_pos, 1, 1)
             eventos = pygame.event.get()
             personaje.control_move(eventos)
             personaje1.control_move(eventos)
-            for platform in platforms:
-                personaje.move([platform.rect])
-                personaje1.move([platform.rect])
-
-            # map movement
-            # Load map image
-            if not bottom_map:
-                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
-                for platform in platforms:
-                    self.screen.blit(platform.image, platform.rect)
-
-            # Check if characters touch the ground before moving the map and platforms
-            if Colisioner.tocar_suelo(personaje.get_hitbox(), paredes):
-                if not bottom_map:
-                    time_until_touch_bottom = pygame.time.get_ticks()
-                bottom_map = True
-            # Flag to activate MapScroll
-            if bottom_map:
-                # Map Scroll
-                scroll_info = ScrollMap()
-                tiempo: int = int((pygame.time.get_ticks() - time_until_touch_bottom)/40)
-                # Update Scroll information
-                if scroll_info.get_scroll() < tiempo*2:
-                    scroll_info.update_scroll(tiempo*2)
-                img_menu.add_img('img/map/map.png', 0, map_y_position, 1, 1)
-                # Plataforms
-                for platform in platforms:
-                    self.screen.blit(platform.image, platform.rect)
-                    if platform.rect.y > 540:
-                        platform.update_vertical_position(0)
-                    else:
-                        platform.update_vertical_position(platform.rect.y + 3)  # Move platforms down by 3px
-                if -1080 + scroll_info.get_scroll() <= 0:
-                    map_y_position = -1080 + scroll_info.get_scroll()  # Reposition platforms when reaching the bottom
-
-            if index == 10:
-                # Change character sprites
-                personaje.update_pose()
-                personaje1.update_pose()
-
-            # Draw characters on screen
-            self.screen.blit(personaje.get_actual_frame(),
-                             (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
-            self.screen.blit(personaje1.get_actual_frame(),
-                             (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
-
-            # Quit the game
-            for evento in pygame.event.get():
+            personaje.move(paredes)
+            personaje1.move(paredes)
+            collide_platform.draw_platform(vel)
+            #pygame.draw.rect(ventana.view, (255, 0, 0), personaje.get_hitbox())
+            self.screen.blit(personaje.get_actual_frame(), (personaje.get_x_coordinate(), personaje.get_y_coordinate()))
+            self.screen.blit(personaje1.get_actual_frame(), (personaje1.get_x_coordinate(), personaje1.get_y_coordinate()))
+            for evento in eventos:
                 if evento.type == QUIT:
                     pygame.quit()
                     sys.exit()
@@ -119,4 +63,8 @@ class Play:
             else:
                 index = 0
             pygame.display.update()
-            clock.tick(40)
+            reloj = pygame.time.Clock()
+            if y_pos < 0:
+                y_pos += vel
+            reloj.tick(40)
+
